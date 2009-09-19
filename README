@@ -1,0 +1,16 @@
+An R6RS library for Manued (真鵺道) [0]
+
+== License
+
+New BSD License
+
+== Notes
+
+* Tests needs Ypsilon [1] with an external library (xunit) [2];
+  Run `YPSILON_SITELIB="path of (xunit)" make test'.
+
+== References
+
+[0] http://www.mpi-inf.mpg.de/~hitoshi/otherprojects/manued/index.shtml
+[1] http://code.google.com/p/ypsilon/
+[2] http://github.com/tabe/xunit/

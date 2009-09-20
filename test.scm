@@ -12,8 +12,8 @@
        (call-with-values
            (lambda () (datum->before&after datum))
          (lambda (b a)
-           (assert-equal? (string->list before) b)
-           (assert-equal? (string->list after) a)))))))
+           (assert-equal? before b)
+           (assert-equal? after a)))))))
 
 (assert-manued "" '() "" "")
 (assert-manued "manued" '(#\m #\a #\n #\u #\e #\d) "manued" "manued")

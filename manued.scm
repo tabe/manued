@@ -29,13 +29,15 @@
 ;;   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 (library (manued)
-  (export unmatched-parenthesis?
+  (export manued-condition?
+          unmatched-parenthesis?
           terminating-escape?
           missing-separator?
           unknown-command?
           parse
           string->datum
-          datum->before&after)
+          datum->before&after
+          string->before&after)
   (import (rnrs))
 
   (define *left-parenthesis* #\[)
@@ -54,16 +56,19 @@
   (define (make-swap alpha beta gamma)
     (list 'swap alpha beta gamma))
 
-  (define-condition-type &unmatched-parenthesis &condition
+  (define-condition-type &manued-condition &condition
+    make-manued-condition manued-condition?)
+
+  (define-condition-type &unmatched-parenthesis &manued-condition
     make-unmatched-parenthesis unmatched-parenthesis?)
 
-  (define-condition-type &terminating-escape &condition
+  (define-condition-type &terminating-escape &manued-condition
     make-terminating-escape terminating-escape?)
 
-  (define-condition-type &missing-separator &condition
+  (define-condition-type &missing-separator &manued-condition
     make-missing-separator missing-separator?)
 
-  (define-condition-type &unknown-command &condition
+  (define-condition-type &unknown-command &manued-condition
     make-unknown-command unknown-command?)
 
   (define (read-manued port)
@@ -155,6 +160,9 @@
     (traverse datum
               '()
               '()
-              (lambda (b a) (values (reverse b) (reverse a)))))
+              (lambda (b a) (values (list->string (reverse b)) (list->string (reverse a))))))
+
+  (define (string->before&after str)
+    (datum->before&after (string->datum str)))
 
 )
